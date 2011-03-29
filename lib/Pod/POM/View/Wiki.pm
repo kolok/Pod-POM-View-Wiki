@@ -68,6 +68,79 @@ sub view_head4 {
   return "=== ".$node->title->present($self)." ===\n\n" . $node->content->present($self);
 }
 
+=head2 view_textblock
+
+overwrite view_textblock form Wiki
+
+=cut
+#sub view_textblock {
+#  my ($self, $node) = @_;
+#  return "textblock";#"=== ".$node->title->present($self)." ===\n\n" . $node->content->present($self);
+#}
+
+=head2 view_seq_code
+
+overwrite view_seq_codei for wiki
+
+
+sub view_seq_code{
+  my ($self, $node) = @_;
+  my $result = '';
+  while (my $line = <$node>)
+  {
+    if ($line =~ /\s+(\^.*\^)$/)
+    { $result = $1; }
+    else
+    { $result = $line;}
+  }
+  return "code";#$result;
+}
+=cut
+
+sub view_verbatim{
+  my ($self, $node) = @_;
+  my $result = '';
+  my @nodes = split /\n/, $node;
+  foreach my $line (@nodes)
+  {
+    if ($line =~ /\s+(\^.*\^)$/)
+    { $result .= $1."\n"; }
+    elsif ($line =~ /\s+(\|.*\|)$/)
+    { $result .= $1."\n"; }
+    else
+    { $result .= $line."\n";}
+  }
+  return "$result\n";
+}
+
+sub view_textblock {
+  my ($self, $node) = @_;
+
+  $node =~ s/\n([A-Za-z])/\\\\ $1/g;
+  return "$node\n\n";
+}
+
+=head2 view_seq_bold
+
+overwrite view_seq_bold for wiki
+
+=cut
+
+sub view_seq_bold {
+  my ($self, $text) = @_;
+  return "**$text**";
+}
+=head2 view_seq_italic
+
+overwrite view_seq_italic for wiki
+
+=cut
+
+sub view_seq_italic {
+  my ($self, $text) = @_;
+  return "//".$text."//";
+}
+
 
 #TODO : Private method
 
