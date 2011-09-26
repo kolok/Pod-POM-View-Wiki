@@ -80,7 +80,7 @@ overwrite view_textblock form Wiki
 
 =head2 view_seq_code
 
-overwrite view_seq_codei for wiki
+overwrite view_seq_code for wiki
 
 
 sub view_seq_code{
@@ -95,6 +95,12 @@ sub view_seq_code{
   }
   return "code";#$result;
 }
+=cut
+
+=head2 view_verbatim
+
+overwrite view_verbatim for wiki
+
 =cut
 
 sub view_verbatim{
@@ -113,6 +119,12 @@ sub view_verbatim{
   return "$result\n";
 }
 
+=head2 view_textblock
+
+overwrite view_textblock for wiki
+
+=cut
+
 sub view_textblock {
   my ($self, $node) = @_;
 
@@ -130,6 +142,7 @@ sub view_seq_bold {
   my ($self, $text) = @_;
   return "**$text**";
 }
+
 =head2 view_seq_italic
 
 overwrite view_seq_italic for wiki
