@@ -28,6 +28,29 @@ pom2 wiki path_to_my_file.pod > path_to_my_file.wiki
 
 =head1 SUBROUTINES/METHODS
 
+
+# Weborama Patch public / private
+sub view_public {
+    my ($self, $public) = @_;
+    if ($self->{public})
+    {
+        return $public->content->present($self);
+    }
+    return '';
+}
+# end
+
+# Weborama Patch public / private
+sub view_private {
+    my ($self, $private) = @_;
+    if ($self->{private})
+    {
+        return $private->content->present($self);
+    }
+}
+# end
+=cut
+
 =head2 view_head1
 
 overwrite view_head1 form Wiki
@@ -67,6 +90,49 @@ sub view_head4 {
   my ($self, $node) = @_;
   return "=== ".$node->title->present($self)." ===\n\n" . $node->content->present($self);
 }
+
+#-------------------------------------------------------------------------------
+# Weborama patch
+#-------------------------------------------------------------------------------
+sub view_function {
+    my ($self, $function) = @_;
+    my $title = $function->title;
+    return "== Function : $title ==\n\n"
+	. $function->content->present($self);
+}
+
+
+sub view_method {
+    my ($self, $method) = @_;
+    print STDERR "TEST method";
+    return "**Method : **\n\n"
+	. $method->content->present($self);
+}
+
+
+sub view_call {
+    my ($self, $call) = @_;
+    print STDERR "TEST call";
+    return "**Call : **\n\n"
+	. $call->content->present($self);
+}
+
+
+sub view_response {
+    my ($self, $response) = @_;
+    print STDERR "TEST response";
+    return "**Response : **\n\n"
+	. $response->content->present($self);
+}
+
+#-------------------------------------------------------------------------------
+# End of Weborama patch
+#-------------------------------------------------------------------------------
+
+
+
+
+
 
 =head2 view_textblock
 
