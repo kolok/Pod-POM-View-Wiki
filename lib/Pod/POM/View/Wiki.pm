@@ -97,14 +97,13 @@ sub view_head4 {
 sub view_function {
     my ($self, $function) = @_;
     my $title = $function->title;
-    return "== Function : $title ==\n\n"
+    return "=== Function : $title ===\n\n"
 	. $function->content->present($self);
 }
 
 
 sub view_method {
     my ($self, $method) = @_;
-    print STDERR "TEST method";
     return "**Method : **\n\n"
 	. $method->content->present($self);
 }
@@ -112,7 +111,6 @@ sub view_method {
 
 sub view_call {
     my ($self, $call) = @_;
-    print STDERR "TEST call";
     return "**Call : **\n\n"
 	. $call->content->present($self);
 }
@@ -120,7 +118,6 @@ sub view_call {
 
 sub view_response {
     my ($self, $response) = @_;
-    print STDERR "TEST response";
     return "**Response : **\n\n"
 	. $response->content->present($self);
 }
@@ -220,8 +217,30 @@ sub view_seq_italic {
   return "//".$text."//";
 }
 
+use String::CamelCase 'decamelize';
 
-#TODO : Private method
+sub view_seq_link {
+    my ($self, $link) = @_;
+
+    # view_seq_text has already taken care of L<http://example.com/>
+    if ($link =~ /^\[\[/ ) {
+        return $link;
+    }
+
+    my @link_parts = split /\//, $link;
+
+    my $prefix = $ENV{WIKI_LINK_PREFIX} || "";
+    my $suffix = $ENV{WIKI_LINK_SUFFIX} || "";
+    $prefix .= ":" if $prefix;
+    $suffix = ":".$suffix if $suffix;
+
+    if (scalar(@link_parts) == 2 ) {
+        return "[[$prefix" . decamelize($link_parts[0]) . "$suffix#". $link_parts[1] ."|" . $link_parts[1] . "]]";
+    }
+
+    return $link;
+
+}
 
 
 
