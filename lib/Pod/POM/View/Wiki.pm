@@ -58,7 +58,7 @@ overwrite view_head1 form Wiki
 =cut
 sub view_head1 {
   my ($self, $node) = @_;
-  return "====== ".$node->title->present($self)." ======\n\n" . $node->content->present($self);
+  return "======= ".$node->title->present($self)." =======\n\n" . $node->content->present($self);
 }
 
 =head2 view_head2
@@ -68,7 +68,7 @@ overwrite view_head2 form Wiki
 =cut
 sub view_head2 {
   my ($self, $node) = @_;
-  return "===== ".$node->title->present($self)." =====\n\n" . $node->content->present($self);
+  return "====== ".$node->title->present($self)." ======\n\n" . $node->content->present($self);
 }
 
 =head2 view_head3
@@ -78,7 +78,7 @@ overwrite view_head3 form Wiki
 =cut
 sub view_head3 {
   my ($self, $node) = @_;
-  return "==== ".$node->title->present($self)." ====\n\n" . $node->content->present($self);
+  return "===== ".$node->title->present($self)." =====\n\n" . $node->content->present($self);
 }
 
 =head2 view_head4
@@ -88,7 +88,7 @@ overwrite view_head4 form Wiki
 =cut
 sub view_head4 {
   my ($self, $node) = @_;
-  return "=== ".$node->title->present($self)." ===\n\n" . $node->content->present($self);
+  return "==== ".$node->title->present($self)." ====\n\n" . $node->content->present($self);
 }
 
 #-------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ sub view_head4 {
 sub view_function {
     my ($self, $function) = @_;
     my $title = $function->title;
-    return "=== Function : $title ===\n\n"
+    return "==== $title ====\n\n"
 	. $function->content->present($self);
 }
 
